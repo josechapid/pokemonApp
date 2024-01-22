@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const cors= require("cors") // este esta opcional
 
 require('./db.js');
 
@@ -12,8 +13,10 @@ server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
+server.use(cors())
+server.use(express.json())
 server.use(cookieParser());
-server.use(morgan('dev'));
+server.use(morgan('dev')); // utiliza a morgan en la fase de desarrollo
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
