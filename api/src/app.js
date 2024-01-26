@@ -13,8 +13,8 @@ server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
-server.use(cors())
-server.use(express.json())
+
+server.use(express.json()) // para que pueda leer lo que llega por body
 server.use(cookieParser());
 server.use(morgan('dev')); // utiliza a morgan en la fase de desarrollo
 server.use((req, res, next) => {

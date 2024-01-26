@@ -1,28 +1,16 @@
-//                       _oo0oo_
-//                      o8888888o
-//                      88" . "88
-//                      (| -_- |)
-//                      0\  =  /0
-//                    ___/`---'\___
-//                  .' \\|     |// '.
-//                 / \\|||  :  |||// \
-//                / _||||| -:- |||||- \
-//               |   | \\\  -  /// |   |
-//               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /
-//             ___'. .'  /--.--\  `. .'___
-//          ."" '<  `.___\_<|>_/___.' >' "".
-//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//         \  \ `_.   \_ __\ /__ _/   .-` /  /
-//     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
-//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+require("dotenv").config();
+const { PORT } = process.env; 
+const app = require("./src/app.js");
+const { conn } = require("./src/db.js");
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+conn
+.sync({ force: true }) // el force en true hace que la bd vuelva y se levante, para resetear la bd, contrario a esta opcin esta alter:true, el cual va a conservar lo que ya habia mas lo que modifiquemos
+.then(() => {     // esto quiere decir que como estamos haciendo pruebas nos ayuda a cuando se cierre y se vuelva a levantar la informacion que solicitamos este intacta
+  app.listen(PORT, () => {
+    console.log(`%s listening at: ${PORT}`); // eslint-disable-line no-console
   });
+})
+.catch(err=>{
+  console.log(err);
 });
