@@ -1,15 +1,18 @@
 //componentes
 import SearchBar from "../SearchBar/SearchBar"
-import PokeList from "../PokeList"
+import PokeList from "../PokeList/PokeList"
 import FilterOptions from "../FilterOptions/FilterOptions"
 import Pagination from "../Pagination/Pagination"
-
+import PokemonForm from "../Form/FormPage"
 //hooks
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom"
 
 //Bibliotecas
 import axios from "axios"
+
+//styles
+import "./HomePage.css"
 
 
 
@@ -33,7 +36,7 @@ const HomePage = ()=>{
                     params: {offset: (currentPage -1) * 12, limit: 12}
                   });
                 
-                setPokemonsList(respnse.data.results);
+                setPokemonsList(response.data.results);
                 setTotalPages(Math.ceil(response.data.count /12));                
             } catch (error) {
                 console.log("Error al obtener la lista de Pokemons: ", error)                
@@ -53,10 +56,14 @@ const HomePage = ()=>{
         fetchPokemonsType()
     }, [currentPage])
 
+    //! revisar pokemonList
+    let pokemonList= []
+
+
     useEffect(() => {
       // Filtrar y ordenar la lista de Pokémon según las opciones seleccionadas
-      let filteredList = pokemonList.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+      let filteredList = pokemonList?.filter((pokemon) =>
+        pokemon.name.toLowerCase() === searchTerm.toLowerCase()
       );
 
       if (selectedType !== "all") {
@@ -77,7 +84,7 @@ const HomePage = ()=>{
       });
 
       setVisiblePokemons(filteredList);
-    }, [pokemonList, selectedType, sortOrder, searchTerm]);
+    }, [pokemonsList, selectedType, sortOrder, searchTerm]);
 
     const handlePageChange = (newPage) => {
       setCurrentPage(newPage);
@@ -94,16 +101,49 @@ const HomePage = ()=>{
     const handleSearch = (term) => {
       setSearchTerm(term);
     };
+    const handleCreatePokemon = (newPokemon) => {
+      // Lógica para enviar la información del nuevo Pokémon al servidor o al estado de la aplicación
+      console.log("Nuevo Pokémon creado:", newPokemon);
+    };
+    const handleTypeChange = (type) => {
+      
+    }
 
  return (
-   <div>
-     <h1>Home Page</h1>
-     <SearchBar onSearch={handleSearch} />
-     <FilterOptions onFilter={handleFilter} onSort={handleSort} onTypeChange={handleTypeChange} pokemonTypes={pokemonTypes}/>
-     <PokeList pokemons={visiblePokemons} />
-     <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange}/>
-     <Link to="/">Volver a la Landig</Link>
+   <div id="home-page">
      
+       <img
+         src="https://i.gifer.com/origin/0d/0dea0c59cbf084d981fc5b55643cb6e6_w200.webp"
+         alt="Pokemon"
+         />
+         <h1>Pokémon</h1>
+     
+     <div className="button-container">
+       <Link to="/">
+         <button>Landig</button>
+       </Link>
+       <Link to="/formPage">
+         <button>Crear Pokemon</button>
+       </Link>
+     </div>
+     
+     <br />
+     <div className="filter-search-container">
+       <FilterOptions
+         onFilter={handleFilter}
+         onSort={handleSort}
+         onTypeChange={handleTypeChange}
+         pokemonTypes={pokemonTypes}
+       />
+       <SearchBar onSearch={handleSearch} />
+     </div>
+
+     <PokeList pokemons={visiblePokemons} />
+     <Pagination
+       totalPages={totalPages}
+       currentPage={currentPage}
+       onPageChange={handlePageChange}
+     />
    </div>
  );
 }

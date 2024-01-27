@@ -1,0 +1,71 @@
+#form-page{
+    margin: 0;
+    padding:0;
+    background: url('https://wallpapercave.com/wp/wp4636387.jpg') center/cover fixed no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+h2{
+    font-size: 3em;
+    margin-bottom: 20px;
+    width: 100%;
+}
+form {
+  max-width: 600px; /* Ajusta el ancho máximo según sea necesario */
+  margin: 0 auto; /* Centra el formulario horizontalmente */
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+label {
+  display: flex; /* Muestra cada etiqueta en un bloque separado */
+  flex-direction: column;
+  flex: 1;
+  margin-bottom: 10px; /* Ajusta el espacio entre las etiquetas */
+  font-size: 1.2em;
+}
+
+input,
+select {
+  width: 100%; /* Hace que los campos de entrada ocupen el 100% del ancho disponible */
+  padding: 8px; /* Ajusta el relleno según sea necesario */
+  margin-bottom: 15px; /* Ajusta el espacio entre los campos de entrada */
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: #727275;  
+}
+
+button {
+  background-color: #4c59af;
+  color: #ffffff;
+  padding: 8px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c3c9c4;
+}
+/* Estilos adicionales para la organización de dos columnas */
+.label-group {
+  display: flex;
+  gap: 20px;
+}
+
+/* Ajuste de estilos para el botón "Agregar Tipo" */
+.label-group button {
+  align-self: flex-end; /* Coloca el botón en la parte inferior del grupo */
+}
+.centered-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

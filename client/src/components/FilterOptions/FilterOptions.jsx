@@ -8,7 +8,8 @@ const FilterOptions = ({onFiler, onSort, onTypeChange}) =>{
         const selectedType=e.target.value;
         onTypeChange(selectedType)
     })
-
+    //! Revisar pokemonTypes
+    const pokemonTypes=[]
     return (
 <div>
     <button onClick={()=>handleSortClick("asc")}>Ordenar Ascendente</button>

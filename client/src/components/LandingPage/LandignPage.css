@@ -1,0 +1,48 @@
+#landing-page {
+background: url("https://external-preview.redd.it/NXrR_qnMRHrwUoE8pbeiX26fq4mNctFsmdEghRVApSQ.jpg?auto=webp&s=b18e1b0df84f417036d4e1ac0affb6245a071ebf") center/cover;;
+  height: 100vh;
+  padding: 20px;
+  color: #ffffff; /* Color del texto */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  transition: background-size 0.5s;
+}
+
+
+#landing-page h1 {
+  font-size: 6em; /* Tamaño del título, ajusta según sea necesario */
+  margin-bottom: 10px;
+  margin-top: 20px; /* Márgen superior */
+  margin-left: 110px;
+  transition: font-size 0.5s;
+}
+
+#landing-page button {
+  background-color: #4CAF50; /* Color de fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
+  padding: 20px 40px;
+  font-size: 1.2em; /* Tamaño del texto del botón, ajusta según sea necesario */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Márgen superior */
+  margin-left: 380px;
+  transition: font-size 0.5s;
+}
+
+#landing-page button:hover {
+  background-color: #c3c9c4; /* Color de fondo del botón al pasar el ratón */
+}
+#landing-page.scrolled {
+  background-size: 120%; /* Ajusta según sea necesario para el tamaño de fondo al hacer scroll */
+}
+
+#landing-page.scrolled h1 {
+  font-size: 1.5em; /* Ajusta según sea necesario para el tamaño del título al hacer scroll */
+}
+
+#landing-page.scrolled button {
+  font-size: 1em; /* Ajusta según sea necesario para el tamaño del texto del botón al hacer scroll */
+}

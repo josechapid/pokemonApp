@@ -1,0 +1,50 @@
+#home-page {
+    background: url("https://www.yts.nz/assets/images/movies/pokemon_the_movie_white_victini_and_zekrom_2011/large-screenshot3.jpg") center/cover;
+  height: 100vh;
+  padding: 20px;
+  color: #ffffff; /* Color del texto */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  transition: background-size 0.5s;
+  
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Ajusta el espacio entre los botones y el contenido superior */
+}
+.filter-search-container {
+  display: flex;
+  justify-content: space-between; /* Ajusta el espacio entre los componentes */
+  margin-top: 6px; /* Ajusta el espacio entre FilterOptions/SearchBar y el contenido superior */
+  
+}
+
+#home-page h1 {
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 6em; /* Tamaño del título, ajusta según sea necesario */
+  margin-bottom: 10px;
+  margin-top: 20px; /* Márgen superior */
+  transition: font-size 0.5s;
+  
+}
+
+
+#home-page button {
+  background-color: #4c59af; /* Color de fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
+  padding: 4px 20px;
+  font-size: 1.2em; /* Tamaño del texto del botón, ajusta según sea necesario */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+    margin: 0 10px;
+  transition: font-size 0.5s;
+}
+
+#home-page button:hover {
+  background-color: #c3c9c4; /* Color de fondo del botón al pasar el ratón */
+}
