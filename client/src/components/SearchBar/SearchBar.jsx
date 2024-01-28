@@ -1,32 +1,26 @@
 import React, { useState } from "react";
 
 const SearchBar = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [input, setInput] = useState("");
 
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
   };
 
-  const handleSearchClick = () => {
-    onSearch(searchTerm);
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      onSearch(searchTerm);
-    }
+  const handleButtonPress= (e) => {
+      e.preventDefault
+      onSearch(input);
+      setInput("")
   };
 
   return (
     <div>
       <input
-        type="text"
-        placeholder="Buscar Pokémon"
-        value={searchTerm}
+        type="search"
+        value={input}
         onChange={handleInputChange}
-        onKeyPress={handleKeyPress} //falta una s
-      />
-      <button onClick={handleSearchClick}>Buscar</button>
+        placeholder="Buscar Pokémon"/>
+      <button onClick={handleButtonPress}>Buscar</button>
     </div>
   );
 };

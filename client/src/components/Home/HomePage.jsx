@@ -26,6 +26,9 @@ const HomePage = ()=>{
     const [selectedType, setSelectedType]= useState("all")
     const [visiblePokemons, setVisiblePokemons] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [pokemon, setPokemon]= ([])
+
+    const URL= `http://localhost:3001/pokemons`;
 
 
     useEffect(()=>{
@@ -98,8 +101,22 @@ const HomePage = ()=>{
       setSelectedType(type);
     };
 
-    const handleSearch = (term) => {
-      setSearchTerm(term);
+    const handleSearch = async (input) => {
+      try {
+        const {status, data}= await axios(`${URL}/${input}`)
+        if(status >= 200 && status <400){
+          if(data.name){
+            setPokemon((oldState)=>[...oldState, data])
+          }
+        } else {
+          window.alert("No hay pokemons con ese nombre")
+        }
+        
+      } catch (error) {
+        console.log(error);        
+      }
+
+
     };
     const handleCreatePokemon = (newPokemon) => {
       // Lógica para enviar la información del nuevo Pokémon al servidor o al estado de la aplicación
@@ -120,7 +137,7 @@ const HomePage = ()=>{
      
      <div className="button-container">
        <Link to="/">
-         <button>Landig</button>
+        <button>Landig</button>
        </Link>
        <Link to="/formPage">
          <button>Crear Pokemon</button>
