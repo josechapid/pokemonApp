@@ -15,7 +15,7 @@ background: url("https://external-preview.redd.it/NXrR_qnMRHrwUoE8pbeiX26fq4mNct
   font-size: 6em; /* Tamaño del título, ajusta según sea necesario */
   margin-bottom: 10px;
   margin-top: 20px; /* Márgen superior */
-  margin-left: 110px;
+  margin-left: -350px;
   transition: font-size 0.5s;
 }
 

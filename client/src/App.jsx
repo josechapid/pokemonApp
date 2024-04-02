@@ -7,16 +7,33 @@ import {Routes, Route} from 'react-router-dom';
 import "../src/App.css"
 
 function App () {
-  return (
-    <div className="App"> 
-    
-        <Routes>
-          <Route exact path="/" element={<LandinPage/>} />
-          <Route path="/home" element={<HomePage/>} />
-          <Route path="/detail/:pokemonId" element={<Detail/>} />
-          <Route path="/formPage" element={<FormPage/>} />
 
-        </Routes>
+  const newPokemon = async (pokemon) => {
+    const url = "http://localhost:3001/pokemons";
+    try {
+      const response = await axios.post(url, pokemon);
+      console.log(response);
+      if (response.status === 200) {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      if (error.response.status === 404) {
+        alert(error.response.data);
+      }
+    }
+  };
+
+
+
+
+  return (
+    <div className="App">
+      <Routes>
+        <Route exact path="/" element={<LandinPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/detail/:pokemonId" element={<Detail />} />
+        <Route path="/formPage" element={<FormPage newPokemon={newPokemon} />} />
+      </Routes>
     </div>
   );
 }

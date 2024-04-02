@@ -1,80 +1,61 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./FormPage.css"
 
-const PokemonForm = ({ onCreatePokemon }) => {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [hp, setHp] = useState("");
-  const [attack, setAttack] = useState("");
-  const [defense, setDefense] = useState("");
-  const [speed, setSpeed] = useState("");
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [types, setTypes] = useState([]);
-  const [selectedType, setSelectedType] = useState("");
+import { useNavigate } from "react-router-dom";
+import style from "./FormPage.css";
 
-  const handleTypeChange = (e) => {
-    setSelectedType(e.target.value);
-  };
+import validate from "./validate";
 
-  const handleAddType = () => {
-    if (selectedType && !types.includes(selectedType)) {
-      setTypes([...types, selectedType]);
+const FormCreate = ({ newPokemon,types }) => {
+
+const navigate= useNavigate();
+  const [inputData, setInputData] = useState({
+    name: "",
+    sprite: "",
+    hp: "",
+    attack: "",
+    defense: "",
+    speed: "",
+    height: "",
+    weight: "",
+    types: [],
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      const updatedTypes = checked
+        ? [...inputData.types, value]
+        : inputData.types.filter((type) => type !== value);
+
+      setInputData({
+        ...inputData,
+        types: updatedTypes.slice(0, 2),
+      });
+    } else {
+      setInputData({
+        ...inputData,
+        [name]: value,
+      });
     }
-    setSelectedType("");
-  };
-
-  const handleRemoveType = (typeToRemove) => {
-    setTypes(types.filter((type) => type !== typeToRemove));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Validaciones
-    if (!name || !image || !hp || !attack || !defense) {
-      alert("Todos los campos son obligatorios.");
-      return;
-    }
+    const formErrors = validate(inputData);
 
-    if (isNaN(Number(hp)) || isNaN(Number(attack)) || isNaN(Number(defense))) {
-      alert("Los campos de Vida, Ataque y Defensa deben ser números.");
-      return;
-    }
-
-    // Crear objeto de Pokémon con la información del formulario
-    const newPokemon = {
-      name,
-      image,
-      hp: Number(hp),
-      attack: Number(attack),
-      defense: Number(defense),
-      speed: speed ? Number(speed) : null,
-      height: height ? Number(height) : null,
-      weight: weight ? Number(weight) : null,
-      types,
-    };
-
-    // Llamar a la función para crear el nuevo Pokémon
-    onCreatePokemon(newPokemon);
-
-    // Limpiar los campos del formulario después de crear el Pokémon
-    setName("");
-    setImage("");
-    setHp("");
-    setAttack("");
-    setDefense("");
-    setSpeed("");
-    setHeight("");
-    setWeight("");
-    setTypes([]);
-    setSelectedType("");
+    newPokemon(inputData);
+    navigate("/home");
   };
 
   return (
     <div id="form-page">
-      <form onSubmit={handleSubmit}>
+      <form onChange={handleChange}>
         <Link to="/home">
           <button>Home</button>
         </Link>
@@ -82,149 +63,126 @@ const PokemonForm = ({ onCreatePokemon }) => {
         <h1>Crear Nuevo Pokémon</h1>
 
         <div className="label-group">
-          <label>
-            Nombre:
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              pattern="[A-Za-z]+"
-              required
-            />
-          </label>
-          <label>
-            Imagen:
-            <input
-              type="text"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              required
-            />
-          </label>
+          <label>Name:</label>
+          <input
+            placeholder="example: jose"
+            type="text"
+            value={inputData.name}
+            name="name"
+            id="name"
+            onChange={handleChange}
+          />
+          {errors.name !== null && <p>{errors.name}</p>}
+
+          <label placeholder="example: ">Image:</label>
+          <input
+            placeholder="example.png"
+            type="text"
+            value={inputData.sprite}
+            className={style.formInput}
+            name="sprite"
+            id="sprite"
+            onChange={handleChange}
+          />
+          {errors.sprite !== null && <p>{errors.sprite}</p>}
         </div>
 
         <div className="label-group">
-          <label>
-            Vida:
-            <input
-              type="text"
-              value={hp}
-              onChange={(e) => setHp(e.target.value)}
-              pattern="[0-9]+"
-              required
-            />
-          </label>
-          <label>
-            Ataque:
-            <input
-              type="text"
-              value={attack}
-              onChange={(e) => setAttack(e.target.value)}
-              pattern="[0-9]+"
-              required
-            />
-          </label>
+          <label> Hp:</label>
+          <input
+            placeholder="minimun attribute value: 100"
+            type="text"
+            value={inputData.hp}
+            className={style.formInput}
+            name="hp"
+            id="hp"
+            onChange={handleChange}
+          />
+          {errors.hp !== null && <p>{errors.hp}</p>}
+
+          <label>Attack:</label>
+          <input
+            placeholder="minimun attribute value: 5"
+            type="text"
+            value={inputData.atk}
+            name="atk"
+            className={style.formInput}
+            onChange={handleChange}
+          />
+          {errors.atk !== null && <p>{errors.attack}</p>}
         </div>
 
         <div className="label-group">
-          <label>
-            Defensa:
-            <input
-              type="text"
-              value={defense}
-              onChange={(e) => setDefense(e.target.value)}
-              pattern="[0-9]+"
-              required
-            />
-          </label>
-          <label>
-            Velocidad:
-            <input
-              type="text"
-              value={speed}
-              onChange={(e) => setSpeed(e.target.value)}
-              pattern="[0-9]+"
-            />
-          </label>
+          <label>Defense:</label>
+          <input
+            placeholder="minimun attribute value: 5"
+            type="text"
+            value={inputData.def}
+            className={style.formInput}
+            name="def"
+            onChange={handleChange}
+          />
+          {errors.def !== null && <p>{errors.def}</p>}
+
+          <label>Speed:</label>
+          <input
+            placeholder="minimun attribute value: 10"
+            type="text"
+            value={inputData.spd}
+            className={style.formInput}
+            name="spd"
+            onChange={handleChange}
+          />
+          {errors.spd !== null && <p>{errors.speed}</p>}
         </div>
 
         <div className="label-group">
-          <label>
-            Altura:
-            <input
-              type="text"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-              pattern="[0-9]+"
-            />
-          </label>
-          <label>
-            Peso:
-            <input
-              type="text"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              pattern="[0-9]+"
-            />
-          </label>
+        <label>Height:</label>
+        <input
+          placeholder="minimun attribute value: 1"
+          type="text"
+          value={inputData.height}
+          className={style.formInput}
+          name="height"
+          onChange={handleChange}
+        />
+        {errors.height !== null && <p>{errors.height}</p>}
+
+        <label >Weight:</label>
+        <input
+          placeholder="minimun attribute value: 1"
+          type="text"
+          value={inputData.weight}
+          className={style.formInput}
+          name="weight"
+          onChange={handleChange}
+        />
+        {errors.weight !== null && <p>{errors.weight}</p>}
+
         </div>
 
-        <div className="centered-group">
-          <label>
-            Tipo:
-            <select value={selectedType} onChange={handleTypeChange}>
-              <option value="" disabled>
-                Seleccionar Tipo
-              </option>
-              <option value="normal">Normal</option>
-              <option value="fighting">Fighting</option>
-              <option value="flying">Flying</option>
-              <option value="poison">Poison</option>
-              <option value="ground">Ground</option>
-              <option value="rock">Rock</option>
-              <option value="bug">Bug</option>
-              <option value="ghost">Ghost</option>
-              <option value="steel">Steel</option>
-              <option value="fire">Fire</option>
-              <option value="water">Water</option>
-              <option value="grass">Grass</option>
-              <option value="electric">Electric</option>
-              <option value="psychic">Psychic</option>
-              <option value="ice">Ice</option>
-              <option value="dragon">Dragon</option>
-              <option value="dark">Dark</option>
-              <option value="unknown">Unknown</option>
-              <option value="shadow">Shadow</option>
-            </select>
-          </label>
-        </div>
 
-        <div className="centered-group">
-          <button type="button" onClick={handleAddType}>
-            Agregar Tipo
-          </button>
-        </div>
-
+        <label>Types:</label>
+        {errors.types !== null && <p>{errors.types}</p>}
         <div>
-          <h4>Tipos Seleccionados:</h4>
-          <ul>
-            {types.map((type) => (
-              <li key={type}>
-                {type}{" "}
-                <button type="button" onClick={() => handleRemoveType(type)}>
-                  Quitar
-                </button>
-              </li>
-            ))}
-          </ul>
+          {types?.map((type) => (
+            <div key={type.name} >
+              <input
+                type="checkbox"
+                value={type.name}
+                onChange={handleChange}
+                checked={inputData.types?.includes(type.name)}
+              />
+              <label>{type.name}</label>
+            </div>
+          ))}
         </div>
 
-        <div className="centered-group">
-          <button type="submit">Crear Pokémon</button>
-        </div>
+        <button onClick={handleSubmit}> Create </button>
       </form>
     </div>
   );
 };
 
-export default PokemonForm;
+
+export default FormCreate;

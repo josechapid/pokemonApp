@@ -1,11 +1,13 @@
 require ("dotenv").config()
 const {URL} =process.env
 const axios = require ("axios")
-const {Pokemon, Type} = require("../db")
+const {Pokemon, Type, pokemon} = require("../db")
 
 const getPokemonsById = async (req, res)=>{
     try {
+      console.log("controlador id");
       const { id } = req.params;
+      //console.log(id)
       //aqui buscamos en la base de datos
       if (id.lenght > 4) {
         const pokemonBd = await Pokemon.findOne({
@@ -40,7 +42,7 @@ const getPokemonsById = async (req, res)=>{
       const pokemonApi = {
         id: pokemonApiData.id,
         name: pokemonApiData.name,
-        image: pokemonApiData.sprites.other.showdown.front_default,
+        image: pokemonApiData.sprites.other["official-artwork"].front_default,
         hitpoints: pokemonApiData.stats.find((stat) => stat.stat.name === "hp")
           .base_stat,
         attack: pokemonApiData.stats.find((stat) => stat.stat.name === "attack")
@@ -54,6 +56,10 @@ const getPokemonsById = async (req, res)=>{
         weight: pokemonApiData.weight,
         types: pokemonApiData.types.map((type) => type.type.name).join("/"),
       };
+
+      await pokemon.bulkCreate(pokemonApi).then(() => {
+        console.log("Datos insertados correctamente.");
+      });
 
       return res.status(200).json(pokemonApi);
     } catch (error) {

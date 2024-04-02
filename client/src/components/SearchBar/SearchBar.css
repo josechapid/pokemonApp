@@ -1,0 +1,13 @@
+.search-container {
+  display: flex;
+  padding: 10px;
+}
+
+input {
+  margin-right: 10px; /* Espacio entre la barra de búsqueda y el botón */
+  padding: 10px;
+}
+.search-button {
+  padding: 8px 14px !important; /* Ajusta el padding del botón */
+  font-size:medium !important;
+}
